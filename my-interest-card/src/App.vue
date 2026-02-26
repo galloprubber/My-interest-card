@@ -1,57 +1,73 @@
 <template>
-    <div class="card-container">
-        <div class="card" :class="{ 'dark-card': isDarkMode }">
-            <!-- 姓名和职业 -->
-            <h1 class="name">韩昊润</h1>
-            <p class="title">软件工程·大二</p>
+    <div class="app" :class="{ 'dark-mode': isDarkMode }">
+        <div class="card-container">
+            <div class="card" :class="{ 'dark-card': isDarkMode }">
+                <!-- 姓名和职业 -->
+                <h1 class="name">韩昊润</h1>
+                <p class="title">软件工程·大二</p>
 
-            <!-- 个人简介 -->
-            <p class="bio">
-                热爱编程、运动和音乐。正在探索前端开发的魅力，期待用创意和代码创造有趣的产品。
-            </p>
+                <!-- 个人简介 -->
+                <p class="bio">
+                    热爱编程、运动和音乐。正在探索前端开发的魅力，期待用创意和代码创造有趣的产品。
+                </p>
 
-            <!-- 兴趣标签 -->
-            <div class="tags">
-                <span class="tag">#icpc</span>
-                <span class="tag">#前端</span>
-                <span class="tag">#骑行</span>
-                <span class="tag">#足球</span>
-                <span class="tag">#跑步</span>
-                <span class="tag">#音乐</span>
-                <span class="tag">#游戏</span>
-            </div>
+                <!-- 兴趣标签 -->
+                <div class="tags">
+                    <span class="tag">#icpc</span>
+                    <span class="tag">#前端</span>
+                    <span class="tag">#骑行</span>
+                    <span class="tag">#足球</span>
+                    <span class="tag">#跑步</span>
+                    <span class="tag">#音乐</span>
+                    <span class="tag">#游戏</span>
+                </div>
 
-            <!-- 分割线 -->
-            <div class="divider"></div>
+                <div class="divider"></div>
 
-            <!-- 点赞和主题切换区域 -->
-            <div class="actions">
-                <button class="like-button">
-                    <span class="like-icon">❤️</span>
-                    <span class="like-count">0</span>
-                </button>
+                <!-- 点赞和主题切换区域 -->
+                <div class="actions">
+                    <button class="like-button" @click="handleLike">
+                        <span class="like-icon">❤️</span>
+                        <span class="like-count">{{ likeCount }}</span>
+                    </button>
 
-                <button class="theme-button">
-                    <span class="theme-icon">🌙</span>
-                    <span>深色模式</span>
-                </button>
+                    <button class="theme-button" @click="toggleTheme">
+                        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+                        <span>{{ isDarkMode ? '浅色模式' : '深色模式' }}</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-// 后续添加响应式
+import { ref } from 'vue';
+
+// 点赞功能
+const likeCount = ref(0);
+
+const handleLike = () => {
+    likeCount.value++;
+};
+
+// 主题切换功能
+const isDarkMode = ref(false);
+
+const toggleTheme = () => {
+    isDarkMode.value = !isDarkMode.value;
+};
 </script>
 
 <style scoped>
-/*居中排列*/
 .card-container {
     width: 100%;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .card {
@@ -60,21 +76,16 @@
     background-color: white;
     border-radius: 24px;
     padding: 32px 24px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    backdrop-filter: blur(2px);
 }
 
-/*深色卡片*/
+/* 深色卡片样式 */
 .dark-card {
     background-color: #2d2d2d;
     color: #ffffff;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.avatar-text {
-    color: white;
-    font-size: 36px;
-    font-weight: bold;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .name {
